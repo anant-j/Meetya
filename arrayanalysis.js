@@ -1,9 +1,11 @@
+// dependencies
 var indico = require('indico.io');
+const BPromise = require('bluebird');
 indico.apiKey = "f12ca69fa6d4c44e4932aba99ae8c5db";
 
 //var fs = require('fs');
 //var hugearray = fs.readFileSync('file.txt').toString().split("\n");
-var hugearray= ["firstval", "secondval"];
+var hugearray= ["fish", "salmon", "nintendo"];
 
 // categories of our array 
 var food = [];
@@ -11,37 +13,30 @@ var entertainment = [];
 
 var logError = function(err) { console.log(err); }
 
-for ( i = 0; i < hugearray.length; i++) {
-
-    function one(callback){
-    indico.relevance(hugearray[i], "food")
-        .then(function(res) {
-            callback(res);
-        })
+// functions to call api and return relevance
+function one(item){
+    return indico.relevance(item, ["food"])
+        .catch(logError);
+    }
+function two(item){
+    return indico.relevance(item, ["entertainment"])
         .catch(logError);
     }
 
-    function two(foodscore){
-    indico.relevance(hugearray[i], "entertainment")
-        .then(function(res) {
-            if (foodscore >= res) {
-                food.push(hugearray[i]);
-                //console.log(food);
-                }
-            else if (foodscore < res) {
-                entertainment.push(hugearray[i]);
-                //console.log(entertainment);
-            }
+// promise function; will call functions (that call api), and sort elements into corresponding array
+    BPromise.each(hugearray, (item) => { 
+      return BPromise.all([one(item), two(item)])
+      .spread((value1, value2) => {
+        const array = value1[0] >= value2[0] ? food : entertainment;
+        array.push(item);
+      })
+
+    
     })
-    .catch(logError) 
-    };
 
-    one(two);
-}
-
-setTimeout(function() {
-      console.log(food);
-      console.log(entertainment);
-    }, 5000)
- //console.log(food);
- //console.log(entertainment);
+    // prints output: optional
+    .then
+    (function() {
+    console.log("Food:", food);
+    console.log("Entertainment:", entertainment);
+    })
