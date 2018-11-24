@@ -34,13 +34,11 @@
 			</section>
 			<section id="banner2">
 				<header class="cent">
-					<h2>Enter Group Info</h2><br>
-				Enter Group Member's name:<br>   <br>
+					<h2>Enter Interests</h2><br>
 				<input id="candidate" align="center" class="input1"></input><br><br>
 					<button onclick="addItem()" class="button style2 ">ADD</button>
 					<button onclick="removeItem()" class="button style2 ">REMOVE</button>
-					<div><ol id="dynamic-list" class="l1 cent"></ol></div>
-        <button onclick="saveTextAsFile()" class="button style2">Save Text to File</button>
+					<div><br><ul id="dynamic-list" class="l1 cent"></ul></div>
 
 </header>					
 					
@@ -53,32 +51,33 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-			<script type="text/javascript">
- 
-function saveTextAsFile()
-{
-    var textToSave =  document.getElementById("dynamic-list").getElementsByTagName("li");
-    console.log(textToSave);
-	var len= textToSave.length;
-	console.log(len);
-	var str1="";
-	for (j=0; j<len; j++){
-	var element = textToSave.item(j).innerHTML;
-	str1 += element + ",";}
-	console.log(str1);
-	 var textToSaveAsBlob = new Blob([str1], {type:"text/plain"});
-    var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
-    var fileNameToSaveAs = "save.txt";
- 
-    var downloadLink = document.createElement("a");
-    downloadLink.download = fileNameToSaveAs;
-    downloadLink.innerHTML = "Download File";
-    downloadLink.href = textToSaveAsURL;
-    downloadLink.onclick = destroyClickedElement;
-    downloadLink.style.display = "none";
-    document.body.appendChild(downloadLink);
- 
-    downloadLink.click();
+
+    <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>	
+	<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyDTQYjQU92jFugDFIjBZCBohq5cK_dbnvI",
+        authDomain: "hackwestern-94158.firebaseapp.com",
+        databaseURL: "https://hackwestern-94158.firebaseio.com",
+        projectId: "hackwestern-94158",
+        storageBucket: "hackwestern-94158.appspot.com",
+        messagingSenderId: "779653032998"
+    };
+    firebase.initializeApp(config);
+    </script>
+
+<script type="text/javascript">
+
+var rootRef = firebase.database().ref().child('listOfNames');
+var newNameRef = rootRef.push();  
+function submitClick(text1) {    
+/* newNameRef.set({
+    lastname: text1,
+    });
+} */
+newNameRef.update({
+        lastname: text1,
+     });
 }
  
 function destroyClickedElement(event)
@@ -96,6 +95,14 @@ function addItem(){
     li.setAttribute('id',candidate.value);
     li.appendChild(document.createTextNode(candidate.value));
     ul.appendChild(li);
+	var textToSave =  document.getElementById("dynamic-list").getElementsByTagName("li");
+	var len= textToSave.length;
+	str="";
+	for (j=0; j<len; j++){
+	var element = textToSave.item(j).innerHTML;
+	str= element;
+	submitClick(str);
+}
 }
 
 function removeItem(){
@@ -103,7 +110,15 @@ function removeItem(){
     var candidate = document.getElementById("candidate");
     var item = document.getElementById(candidate.value);
     ul.removeChild(item);
-}
+	var textToSave =  document.getElementById("dynamic-list").getElementsByTagName("li");
+	var len= textToSave.length;
+	str="";
+	for (j=0; j<len; j++){
+	var element = textToSave.item(j).innerHTML;
+	str= element;
+
+	submitClick(str);
+}}
 
 </script>
 
