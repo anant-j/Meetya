@@ -1,0 +1,101 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<title>HW5</title>
+		  <script src="https://unpkg.com/onedb-client/dist/onedb-client.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+	<script>
+      window.onedb = new OneDBClient({
+        onLogin: function(instance) {
+          if (instance === onedb.hosts.primary) {
+            if (instance.user) {
+              // User is logging in
+              startApp();
+            } else {
+              // User is logging out
+              endApp();
+            }
+          }
+        },
+        scope: [
+          'status:read',
+          'status:create',
+        ],
+      });
+      async function startApp() {
+        document.getElementById('Username').innerHTML = onedb.hosts.primary.user.$.id;
+        document.getElementById('App').setAttribute('style', '')
+        showLatestStatus();
+		window.link1=await onedb.get("mystatus","statusUpdate","hWUpisfT");
+		}
+      function endApp() {
+        document.getElementById('App').setAttribute('style', 'display: none')
+      }
+	        function showLatestStatus() {
+        // Get the user's last status message
+        var query = {
+          'info.created_by': onedb.hosts.primary.user.$.id,
+          limit: 1,
+          sort: 'info.created:descending',
+        }
+        onedb.list('status', 'statusUpdate', query)
+            .then(function(response) {
+              var status = '';
+              if (response.items.length) {
+                status = response.items[0].status
+                status = status.replace(/</g,"&lt;").replace(/>/g,"&gt;");
+              } else {
+                status = "<i>You haven't set your status yet. Use the form below to set your status</i>"
+              }
+              document.getElementById('LatestStatus').innerHTML = status;
+            })
+      }
+      function setStatus() {
+        var status = document.getElementById('StatusInput').value;
+        onedb.create('status', 'statusUpdate', {status: status})
+            .then(function(statusID) {
+              showLatestStatus();
+            })
+      }
+    </script>
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main">
+						<header>
+							<span class="avatar"><img src="images/avatar.jpg" alt="" /></span>
+							<h1>HW5</h1>
+							<p>Please log in</p></header>
+      <div id="LoginForm"></div>
+      <script>
+        document.getElementById('LoginForm').innerHTML = onedb.loginForm();
+      </script>
+      <hr>
+<br>
+      <div id="App">
+        <p id="LatestStatus"></p>
+        <form onsubmit="setStatus(); return false">
+		<h2><label>Logged In as <span id="Username"></span></label></h2>
+ <a href="#" onclick="location.replace(link1.mystatus);">Proceed</a>				</form>
+      </div>
+							
+					</section>
+			</div>
+
+		<!-- Scripts -->
+			<script>
+				if ('addEventListener' in window) {
+					window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-preload\b/, ''); });
+					document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+				}
+			</script>
+
+	</body>
+</html>
