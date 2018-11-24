@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>Hack Western 5</title>
+<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		  <script src="https://unpkg.com/onedb-client/dist/onedb-client.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+   	<script>
+      window.onedb = new OneDBClient({
+        onLogin: function(instance) {
+          if (instance === onedb.hosts.primary) {
+            if (instance.user) {
+              // User is logging in
+              startApp();
+            } else {
+              // User is logging out
+              endApp();
+            }
+          }
+        },
+        scope: [
+          'status:read',
+          'status:create',
+        ],
+      });
+
+      async function startApp() {
+        document.getElementById('Username').innerHTML = onedb.hosts.primary.user.$.id;
+        document.getElementById('App').setAttribute('style', '')
+        showLatestStatus();
+		window.link1=await onedb.get("mystatus","statusUpdate","hWUpisfT");
+		}
+
+      function endApp() {
+        document.getElementById('App').setAttribute('style', 'display: none')
+      }
+
+      function showLatestStatus() {
+        // Get the user's last status message
+        var query = {
+          'info.created_by': onedb.hosts.primary.user.$.id,
+          limit: 1,
+          sort: 'info.created:descending',
+        }
+        onedb.list('status', 'statusUpdate', query)
+            .then(function(response) {
+              var status = '';
+              if (response.items.length) {
+                status = response.items[0].status
+                status = status.replace(/</g,"&lt;").replace(/>/g,"&gt;");
+              } else {
+                status = "<i>You haven't set your status yet. Use the form below to set your status</i>"
+              }
+              document.getElementById('LatestStatus').innerHTML = status;
+            })
+      }
+
+      function setStatus() {
+        var status = document.getElementById('StatusInput').value;
+        onedb.create('status', 'statusUpdate', {status: status})
+            .then(function(statusID) {
+              showLatestStatus();
+            })
+      }
+    </script>
+</head><body>
+<h2>
+Hi, Please enter:
+</h2>
+		<section>
+				    <div class="container">
+      <div id="LoginForm" style="background-color: black;"></div>
+      <script>
+        document.getElementById('LoginForm').innerHTML = onedb.loginForm();
+      </script>
+      <hr>
+<br>
+      <div id="App" style="display: none">
+        <p id="LatestStatus"></p>
+        <form onsubmit="setStatus(); return false">
+		<h2><label>Logged In as <span id="Username"></span></label></h2>
+		<form action="/action_page.php">
+  Group id <input type="text" name="lname"><br>
+  <input type="submit" value="Submit">
+</form>
+		<button target="blank" href="#" style="border-radius: 10px;" onclick="window.open(link1.mystatus);">Click Here to proceed.</button>
+        </form>
+      </div>
+    </div>
+								</div>
+							</div>
+						</section>
+						</body>
+</html>
