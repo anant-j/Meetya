@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Overflow by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<section id="header">
+				<header>
+					<h1>Overflow</h1>
+					<p>By HTML5 UP</p>
+				</header>
+				<footer>
+					<a href="#banner" class="button style2 scrolly-middle">Continue</a>
+				</footer>
+			</section>
+
+		<!-- Banner -->
+			<section id="banner">
+				<header>
+					<h2>Please enter the following details:</h2>
+				</header>Enter Group Id: &nbsp &nbsp &nbsp &nbsp   
+				<input align="center" class="input1"></input><br><br>
+				Enter Postal Code: &nbsp   
+				<input align="center" class="input1"></input>
+				<footer>
+					<a href="#banner2" class="button style2 scrolly">CONTINUE</a>
+				</footer>
+			</section>
+			<section id="banner2">
+				<header class="cent">
+					<h2>Enter Group Info</h2><br>
+				Enter Group Member's name:<br>   <br>
+				<input id="candidate" align="center" class="input1"></input><br><br>
+					<button onclick="addItem()" class="button style2 ">ADD</button>
+					<button onclick="removeItem()" class="button style2 ">REMOVE</button>
+					<div><ol id="dynamic-list" class="l1 cent"></ol></div>
+        <button onclick="saveTextAsFile()" class="button style2">Save Text to File</button>
+
+</header>					
+					
+			</section>
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.poptrox.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script type="text/javascript">
+ 
+function saveTextAsFile()
+{
+    var textToSave =  document.getElementById("dynamic-list").getElementsByTagName("li");
+    console.log(textToSave);
+	var len= textToSave.length;
+	console.log(len);
+	var str1="";
+	for (j=0; j<len; j++){
+	var element = textToSave.item(j).innerHTML;
+	str1 += element + ",";}
+	console.log(str1);
+	 var textToSaveAsBlob = new Blob([str1], {type:"text/plain"});
+    var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+    var fileNameToSaveAs = "save.txt";
+ 
+    var downloadLink = document.createElement("a");
+    downloadLink.download = fileNameToSaveAs;
+    downloadLink.innerHTML = "Download File";
+    downloadLink.href = textToSaveAsURL;
+    downloadLink.onclick = destroyClickedElement;
+    downloadLink.style.display = "none";
+    document.body.appendChild(downloadLink);
+ 
+    downloadLink.click();
+}
+ 
+function destroyClickedElement(event)
+{
+    document.body.removeChild(event.target);
+}
+ 
+</script>
+<script type="text/javascript">
+ 
+function addItem(){
+    var ul = document.getElementById("dynamic-list");
+    var candidate = document.getElementById("candidate");
+    var li = document.createElement("li");
+    li.setAttribute('id',candidate.value);
+    li.appendChild(document.createTextNode(candidate.value));
+    ul.appendChild(li);
+}
+
+function removeItem(){
+    var ul = document.getElementById("dynamic-list");
+    var candidate = document.getElementById("candidate");
+    var item = document.getElementById(candidate.value);
+    ul.removeChild(item);
+}
+
+</script>
+
+
+	</body>
+</html>
