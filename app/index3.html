@@ -48,7 +48,7 @@
 				<input id="candidate" align="center" class="input1"></input><br><br>
 					<button onclick="addItem()" class="button style2 scrolly">ADD</button>
 					<button onclick="removeItem()" class="button style2 scrolly">REMOVE</button>
-					<div><br><ul id="dynamic-array" class="l1 cent"></ul></div>
+					<div><br><ul id="dynamic-list" class="l1 cent"></ul></div>
 					</header>					
 								</div>
 							</section>
@@ -124,28 +124,23 @@ function destroyClickedElement(event)
  
 </script>
 <script type="text/javascript">
- var permStrAppend = "";
- var interestArr = [];
- var flag = 0;
+ 
 function addItem(){
-	var tempStr = document.getElementById("candidate").value;
-	interestArr.push(tempStr);
-	console.log(permStrAppend);
-	console.log(interestArr);
-	//document.getElementById("dynamic-array").innerHTML = "\r\n";
-	if (flag == 0)
-	{
-		permStrAppend+= tempStr;
-	}
-	if (flag == 1) {
-		permStrAppend += ", ";
-		permStrAppend += tempStr;
-	}
-	flag = 1;
-	document.getElementById("dynamic-array").innerHTML = permStrAppend;
-	submitClick(tempStr);
-
-	}
+    var ul = document.getElementById("dynamic-list");
+    var candidate = document.getElementById("candidate");
+    var li = document.createElement("li");
+    li.setAttribute('id',candidate.value);
+    li.appendChild(document.createTextNode(candidate.value));
+    ul.appendChild(li);
+	var textToSave =  document.getElementById("dynamic-list").getElementsByTagName("li");
+	var len= textToSave.length;
+	str="";
+	for (j=0; j<len; j++){
+	var element = textToSave.item(j).innerHTML;
+	str= element;
+	submitClick(str);
+}
+}
 
 function removeItem(){
     var ul = document.getElementById("dynamic-list");
