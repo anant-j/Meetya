@@ -2,52 +2,14 @@ var app_id = "aFL4QgBGgMQEBj5Wr7Cd";
 var app_code = "Gh8ACDRdrIseYJbn-qghQQ";
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
-/*
-module.exports = (postal_code="", keyword="", all_places_details=[], context, callback) => {
-    return callback(null, top(postal_code, keyword, all_places_details));
-}
 
-async function top(postal_code, keyword, all_places_details) {
-    get_nearby_places(postal_code, keyword, all_places_details);
-    await sleep(1000);
-    return get_top_five(all_places_details);
-}
- 
-function get_top_five(all_places_details) {
-    for (var i = 0; i < all_places_details.length; i++) {
-        var price = Math.floor(Math.random()*3) + 1;
-        all_places_details[i]["price"] = price;
-    }
-    all_places_details.sort(
-        function(a, b) {
-            if (a["price"] < b["price"])
-                return -1;
-            else if (a["price"] > b["price"])
-                return 1;
-             if (a["distance"] < b["distance"])
-                return -1;
-            else if (a["distance"] > b["distance"])
-                return 1;
-                
-            return 0;
-        }
-    );
-    
-    if (all_places_details.length >= 5)
-        return all_places_details.slice(0, 5);
-    else
-        return all_places_details;
-}
-*/
-module.exports = (postal_code, keyword, all_places_details=[], latlng_array=[], context, callback) => {
+module.exports = (postal_code="N6G 2J8", keyword="sushi", all_places_details=[], latlng_array=[], context, callback) => {
     return get_nearby_places(postal_code, keyword, all_places_details, latlng_array, callback);
 }
 
-
 function get_nearby_places(postal_code, keyword, all_places_details, latlng_array, callback) {
-    get_latlng_from_postcode(postal_code, latlng_array, keyword, all_places_details, callback);
+    return get_latlng_from_postcode(postal_code, latlng_array, keyword, all_places_details, callback);
 }
-
 
 function get_latlng_from_postcode(postal_code, latlng_array, keyword, all_places_details, callback) {
     getJSON(
@@ -63,7 +25,6 @@ function get_latlng_from_postcode(postal_code, latlng_array, keyword, all_places
             return places_search(latlng_array, keyword, all_places_details, callback);
         }
     );
-    // console.log(latlng_array[0]);
 }
 
 function places_search(latlng_array, keyword, all_places_details, callback) {
@@ -92,7 +53,20 @@ function places_search(latlng_array, keyword, all_places_details, callback) {
             }
             
             console.log("done");
-            callback(null, all_places_details);
+            callback(null, all_places_details.sort(
+                function(a, b) {
+                    if (a["price"] < b["price"])
+                        return -1;
+                    else if (a["price"] > b["price"])
+                        return 1;
+                     if (a["distance"] < b["distance"])
+                        return -1;
+                    else if (a["distance"] > b["distance"])
+                        return 1;
+                        
+                    return 0;
+                }
+            )[0]);
         }
     );
 }
