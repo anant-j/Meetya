@@ -102,16 +102,15 @@
 <script type="text/javascript">
 
 var rootRef = firebase.database().ref().child('listOfNames');
-var newNameRef = rootRef.push();  
 function submitClick(text1) {    
-/* newNameRef.set({
+ rootRef.update({
     lastname: text1,
     });
-} */
-newNameRef.update({
+} 
+ /* rootRef.update({
         lastname: text1,
      });
-}
+} */
  
 function destroyClickedElement(event)
 {
