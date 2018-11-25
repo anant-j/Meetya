@@ -1,0 +1,25 @@
+{
+  "name": "hackwestern5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "arrayanalysis.js",
+  "dependencies": {
+    "bluebird": "^3.5.3",
+    "indico.io": "^0.10.5",
+    "xmlhttprequest": "^1.8.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anant-j/HackWestern5.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anant-j/HackWestern5/issues"
+  },
+  "homepage": "https://github.com/anant-j/HackWestern5#readme"
+}
