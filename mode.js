@@ -30,4 +30,3 @@ module.exports.mode = function mode(array) {
     var rand = stringsWithMaxCount[Math.floor(Math.random()*stringsWithMaxCount.length)];
     return rand;
 }
-

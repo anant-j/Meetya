@@ -57,12 +57,14 @@ commonent = mode(ent);
     temp2 = mode.mode(entertainment);
 })
 .then(function() {
-    console.log(rank.rank("N6G 2J8", temp));
-    console.log(rank.rank("N6G 2J8", temp2));
+    console.log("Most common food:", temp);
+    console.log("Most common entertainment:", temp2);
+    //console.log(rank("N6G 2J8", temp));
+    //module.exports.entertainment(rank("N6G 2J8", temp2));
 })
 
 /*
-// exports the array
+// exports the objects
 module.exports.commonfood;
 module.exports.entertainment;
 */
