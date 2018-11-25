@@ -1,5 +1,13 @@
-var app_id = "aFL4QgBGgMQEBj5Wr7Cd";
-var app_code = "Gh8ACDRdrIseYJbn-qghQQ";
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>test</title>
+</head>
+<body>
+    <div id="suggestion"><p>hello world</p></div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHFd4tNritARs2m0RUCPyo3vq15WCIWCI&libraries=geometry,places">
+</script>
+<script>
 var latlng_array = [];
 var items_ = [];
 var all_places_details = [];
@@ -9,6 +17,7 @@ async function get_top_five_from_postal_code_and_keyword(postal_code, keyword) {
     await sleep(1000);
     var top_five = get_top_five(all_places_details);
     await sleep(500);
+    console.log(JSON.stringify(top_five));
     return top_five;
 }
  
@@ -48,7 +57,7 @@ async function get_nearby_places(postal_code, keyword) {
 
 function places_search(latlng_array, keyword) { 
     getJSON(
-        "https://geocoder.api.here.com/6.2/geocode.json?app_id=aFL4QgBGgMQEBj5Wr7Cd&app_code=Gh8ACDRdrIseYJbn-qghQQ&at=" + latlng_array[0].toString() + "," + latlng_array[1].toString() + "&q=" + keyword.replace(/ /g, "+"),
+        "https://places.api.here.com/places/v1/discover/search?app_id=aFL4QgBGgMQEBj5Wr7Cd&app_code=Gh8ACDRdrIseYJbn-qghQQ&at=" + latlng_array[0].toString() + "," + latlng_array[1].toString() + "&q=" + keyword.replace(/ /g, "+"),
         function(data) {
             items_ = data["results"]["items"];
             for (var i = 0; i < items_.length; i++) {
@@ -93,3 +102,13 @@ var getJSON = function(url, callback) {
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+get_top_five_from_postal_code_and_keyword("N6G 2J8", "sushi", [])
+
+</script>
+<script src="suggest.js"></script>
+<script>
+    //show_place(top_five);
+</script>
+</body>
+</html>
