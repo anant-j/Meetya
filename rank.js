@@ -3,11 +3,13 @@ var app_code = "Gh8ACDRdrIseYJbn-qghQQ";
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 module.exports = (postal_code = "N6G 2J8", keyword="sushi", all_places_details=[], context, callback) => {
+    callback(null, top(postal_code, keyword, all_places_details));
+}
+
+async function top(postal_code, keyword, all_places_details) {
     get_nearby_places(postal_code, keyword, all_places_details);
-    //await sleep(1000);
-    var top_five = get_top_five(all_places_details);
-    //await sleep(500);
-    callback(null, top_five);
+    await sleep(1000);
+    return get_top_five(all_places_details);
 }
  
 function get_top_five(all_places_details) {
