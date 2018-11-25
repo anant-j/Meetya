@@ -1,16 +1,13 @@
 var app_id = "aFL4QgBGgMQEBj5Wr7Cd";
 var app_code = "Gh8ACDRdrIseYJbn-qghQQ";
-var latlng_array = [];
-var items_ = [];
-var all_places_details = [];
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
-module.exports.rank = async function get_top_five_from_postal_code_and_keyword(postal_code, keyword) {
-    get_nearby_places(postal_code, keyword);
-    await sleep(1000);
+module.exports = (postal_code = "N6G 2J8", keyword="sushi", all_places_details=[], context, callback) => {
+    get_nearby_places(postal_code, keyword, all_places_details);
+    //await sleep(1000);
     var top_five = get_top_five(all_places_details);
-    await sleep(500);
-    return top_five;
+    //await sleep(500);
+    callback(null, top_five);
 }
  
 function get_top_five(all_places_details) {
@@ -39,15 +36,14 @@ function get_top_five(all_places_details) {
         return all_places_details;
 }
 
-async function get_nearby_places(postal_code, keyword) {
+async function get_nearby_places(postal_code, keyword, all_places_details) {
     latlng_array = [];
-    all_places_details = [];
-    get_latlng_from_postcode(postal_code);
+    get_latlng_from_postcode(postal_code, latlng_array);
     await sleep(500);
     places_search(latlng_array, keyword);
 }
 
-function places_search(latlng_array, keyword) { 
+function places_search(latlng_array, keyword, all_places_details) { 
     getJSON(
         "https://geocoder.api.here.com/6.2/geocode.json?app_id=aFL4QgBGgMQEBj5Wr7Cd&app_code=Gh8ACDRdrIseYJbn-qghQQ&at=" + latlng_array[0].toString() + "," + latlng_array[1].toString() + "&q=" + keyword.replace(/ /g, "+"),
         function(data) {
@@ -70,7 +66,7 @@ function places_search(latlng_array, keyword) {
     );
 }
 
-function get_latlng_from_postcode(postal_code) {
+function get_latlng_from_postcode(postal_code, latlng_array) {
     getJSON(
         "https://geocoder.api.here.com/6.2/geocode.json?app_id=aFL4QgBGgMQEBj5Wr7Cd&app_code=Gh8ACDRdrIseYJbn-qghQQ&searchtext=" + postal_code.replace(/ /g, "+"), 
         function(status, data) {
@@ -95,7 +91,3 @@ var getJSON = function(url, callback) {
     };
     xhr.send();
 };
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
