@@ -1,15 +1,9 @@
-var app_id = "aFL4QgBGgMQEBj5Wr7Cd";
-var app_code = "Gh8ACDRdrIseYJbn-qghQQ";
-var latlng_array = [];
-var items_ = [];
-var all_places_details = [];
-
-
-async function get_top_five_from_postal_code_and_keyword(postal_code, keyword) {
-    get_nearby_places(postal_code, keyword);
+async function get_top_five_from_postal_code_and_keyword(postal_code, keyword, all_places_details) {
+    get_nearby_places(postal_code, keyword, all_places_details);
     await sleep(1000);
     var top_five = get_top_five(all_places_details);
     await sleep(500);
+    console.log(JSON.stringify(top_five));
     return top_five;
 }
 
@@ -40,18 +34,17 @@ function get_top_five(all_places_details) {
         return all_places_details;
 }
 
-async function get_nearby_places(postal_code, keyword) {
+async function get_nearby_places(postal_code, keyword, all_places_details) {
     latlng_array = [];
-    all_places_details = [];
-    get_latlng_from_postcode(postal_code);
+    get_latlng_from_postcode(postal_code, latlng_array);
     await sleep(500);
-    places_search(latlng_array, keyword);
+    places_search(latlng_array, keyword, all_places_details);
 }
 
-function places_search(latlng_array, keyword) {
+function places_search(latlng_array, keyword, all_places_details) {
     var keyword_fixed = keyword.replace(/ /g, "+");
     url = "https://places.api.here.com/places/v1/discover/search";
-    url += "?app_id=" + app_id + "&app_code=" + app_code;
+    url += "?app_id=" + "aFL4QgBGgMQEBj5Wr7Cd" + "&app_code=" + "Gh8ACDRdrIseYJbn-qghQQ";
 
     parameters = {
         at: latlng_array[0].toString() + "," + latlng_array[1].toString(),
@@ -65,7 +58,7 @@ function places_search(latlng_array, keyword) {
     getJSON(
         url,
         function(data) {
-            items_ = data["results"]["items"];
+            var items_ = data["results"]["items"];
             for (var i = 0; i < items_.length; i++) {
                 var place_details = new Object();
             
@@ -85,14 +78,15 @@ function places_search(latlng_array, keyword) {
     );
 }
 
-function get_latlng_from_postcode(postal_code) {
+function get_latlng_from_postcode(postal_code, latlng_array) {
     var postal_code_fixed = postal_code.replace(/ /g, "+");
     var url = "https://geocoder.api.here.com/6.2/geocode.json";
-    url += "?app_id=" + app_id + "&app_code=" + app_code + "&searchtext=" + postal_code_fixed;
+    url += "?app_id=" + "aFL4QgBGgMQEBj5Wr7Cd" + "&app_code=" + "Gh8ACDRdrIseYJbn-qghQQ" + "&searchtext=" + postal_code_fixed;
     
     getJSON(
         url, 
         function(data) {
+            //console.log(JSON.stringify(data["Response"]
             var location_ = data["Response"]["View"][0]["Result"][0]["Location"]["DisplayPosition"];
             latlng_array.push(location_.Latitude);
             latlng_array.push(location_.Longitude);
