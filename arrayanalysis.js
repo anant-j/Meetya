@@ -1,3 +1,7 @@
+var mode = require('./mode.js');
+var rank = require('./rank.js');
+var temp, temp2;
+
 // dependencies
 var indico = require('indico.io');
 const BPromise = require('bluebird');
@@ -5,7 +9,7 @@ indico.apiKey = "f12ca69fa6d4c44e4932aba99ae8c5db";
 
 //var fs = require('fs');
 //var hugearray = fs.readFileSync('file.txt').toString().split("\n");
-var hugearray= ["fish", "salmon", "nintendo"];
+var hugearray= ["fish", "salmon", "nintendo", "sushi", "sushi", "bowling", "nintendo"];
 
 // categories of our array 
 var food = [];
@@ -34,9 +38,31 @@ function two(item){
     
     })
 
-    // prints output: optional
+// prints arrays: optional
+    
     .then
     (function() {
     console.log("Food:", food);
     console.log("Entertainment:", entertainment);
     })
+    
+/*
+// finds the common food for the categories
+commonfood = mode(food);
+commonent = mode(ent);
+*/
+// prints common variables (optional)
+.then(function() {
+    temp = mode.mode(food);
+    temp2 = mode.mode(entertainment);
+})
+.then(function() {
+    console.log(rank.rank("N6G 2J8", temp));
+    console.log(rank.rank("N6G 2J8", temp2));
+})
+
+/*
+// exports the array
+module.exports.commonfood;
+module.exports.entertainment;
+*/

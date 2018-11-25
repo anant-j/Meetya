@@ -1,6 +1,6 @@
 // Returns the mode of an array. If multi-modal, returns one of the elements at
 // random. If non-modal, returns a random element in the array.
-function mode(array) {
+module.exports.mode = function mode(array) {
     if (array.length == 0)
         return null;
     
@@ -30,3 +30,4 @@ function mode(array) {
     var rand = stringsWithMaxCount[Math.floor(Math.random()*stringsWithMaxCount.length)];
     return rand;
 }
+
