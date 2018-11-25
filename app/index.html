@@ -1,61 +1,91 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>****</title>
+		<title>Meetya</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<link rel="icon" href="images/favicon.png" type="image/x-icon">
 	</head>
 	<body class="is-preload">
 
-		<!-- Header -->
-			<section id="header">
-				<header>
-					<h1>Welcome</h1>
-					<p>To our Website</p>
-				</header>
-				<footer>
-					<a href="#banner" class="button style2 scrolly-middle">Continue</a>
-				</footer>
-			</section>
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
 
-		<!-- Banner -->
-			<section id="banner">
+
+				<!-- Banner -->
+					<section id="banner">
+						<div class="inner">
+							<div class="logo"><img src="images/logo.png" alt="Logo" height="42" width="42"></div>
+							<h2>Welcome to Meetya</h2>
+							<p>Connect with your friends,plan for a meetup within seconds.<a href="http://html5up.net"></a></p>
+						</div>
+					</section>
+
+				<!-- Wrapper -->
+					<section id="wrapper">
+
+						<!-- One -->
+							<section id="one" class="wrapper spotlight style1 cent1">
 				<header>
 					<h2>Please enter the following details:</h2>
 				</header>Enter Group Id: &nbsp &nbsp &nbsp &nbsp   
 				<input align="center" class="input1"></input><br><br>
 				Enter Postal Code: &nbsp   
 				<input align="center" class="input1"></input>
-				<footer>
-					<a href="#banner2" class="button style2 scrolly">CONTINUE</a>
+				<footer><br>
+					<a href="#two" class="button scrolly">CONTINUE</a>
 				</footer>
-			</section>
-			<section id="banner2">
-				<header class="cent">
+							</section>
+
+						<!-- Two -->
+							<section id="two" class="wrapper alt spotlight style2">
+								<div class="inner">
+									<a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>
+								<header class="cent">
 					<h2>Enter Interests</h2><br>
 				<input id="candidate" align="center" class="input1"></input><br><br>
 					<button onclick="addItem()" class="button style2 scrolly">ADD</button>
 					<button onclick="removeItem()" class="button style2 scrolly">REMOVE</button>
 					<div><br><ul id="dynamic-list" class="l1 cent"></ul></div>
-<h2> Select an Option </h2><br>
-					<button onclick="addItem()" class="button style2 scrolly">FOOD</button>
+					</header>					
+								</div>
+							</section>
+
+						<!-- Three -->
+							<section id="three" class="wrapper spotlight style3">
+								<div class="inner">
+									<a href="#" class="image"><img src="images/pic03.jpg" alt="" /></a>
+									<div class="content">
+										<h2> Select an Option </h2><br>
+					<button onclick="addItem()" class="button style2 scrolly">FOOD</button> &nbsp &nbsp
 					<button onclick="removeItem()" class="button style2 scrolly">ENTERTAINMENT</button>
-<br><p> &nbsp </p>
-					</header>							
-			</section>
+									</div>
+								</div>
+							</section>
+
+
+					</section>
+
+				<!-- Footer -->
+					<section id="footer">
+					<div class="inner">
+						<h1>Contact Us</h1>
+					<div class="typeform-widget" data-url="https://anantjain.typeform.com/to/XbjPjd" data-transparency="100" data-hide-headers=true data-hide-footer=true style="width: 100%; height: 500px;"></div> <script> (function() { var qs,js,q,s,d=document, gi=d.getElementById, ce=d.createElement, gt=d.getElementsByTagName, id="typef_orm", b="https://embed.typeform.com/"; if(!gi.call(d,id)) { js=ce.call(d,"script"); js.id=id; js.src=b+"embed.js"; q=gt.call(d,"script")[0]; q.parentNode.insertBefore(js,q) } })() </script> <div style="font-family: Sans-Serif;font-size: 12px;color: #999;opacity: 0.5; padding-top: 5px;"> powered by <a href="https://admin.typeform.com/signup?utm_campaign=XbjPjd&utm_source=typeform.com-12246374-Basic&utm_medium=typeform&utm_content=typeform-embedded-poweredbytypeform&utm_term=EN" style="color: #999" target="_blank">Typeform</a> </div>
+							</div>
+					</section>
+
+			</div>
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/jquery.poptrox.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-
-    <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>	
+			   <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>	
 	<script>
     // Initialize Firebase
     var config = {

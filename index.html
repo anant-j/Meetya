@@ -1,9 +1,12 @@
+<!DOCTYPE HTML>
 <html>
 	<head>
+		<title>Meetya</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
-		<title>HW5</title>
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<link rel="icon" href="images/favicon.png" type="image/x-icon">
 		  <script src="https://unpkg.com/onedb-client/dist/onedb-client.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
 	<script>
@@ -60,20 +63,18 @@
             })
       }
     </script>
-	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
 
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Main -->
-					<section id="main">
-						<header>
-							<span class="avatar"><img src="images/avatar.jpg" alt="" /></span>
-							<h1>HW5</h1>
-							<p>Please log in</p></header>
-      <div id="LoginForm"></div>
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+				<!-- Banner -->
+					<section id="banner">
+						<div class="inner">
+							<div class="logo"><img src="images/logo.png" alt="Logo" height="42" width="42"></div>
+							<h1 style="color: white">Welcome to Meetya</h1>
+							<h2 style="color: white"> Please Log In </h2>
+							 <div id="LoginForm"></div>
       <script>
         document.getElementById('LoginForm').innerHTML = onedb.loginForm();
       </script>
@@ -83,19 +84,16 @@
         <p id="LatestStatus"></p>
         <form onsubmit="setStatus(); return false">
 		<h2><label>Logged In as <span id="Username"></span></label></h2>
- <a href="#" onclick="location.replace(link1.mystatus);">Proceed</a>				</form>
+ <button href="#" onclick="location.replace(link1.mystatus);">Proceed</button></form>
       </div>
-							
-					</section>
-			</div>
-
+						</div></section></div>
 		<!-- Scripts -->
-			<script>
-				if ('addEventListener' in window) {
-					window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-preload\b/, ''); });
-					document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
-				}
-			</script>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
 
 	</body>
 </html>
