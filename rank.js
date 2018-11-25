@@ -73,10 +73,12 @@ function places_search(latlng_array, keyword) {
 function get_latlng_from_postcode(postal_code) {
     getJSON(
         "https://geocoder.api.here.com/6.2/geocode.json?app_id=aFL4QgBGgMQEBj5Wr7Cd&app_code=Gh8ACDRdrIseYJbn-qghQQ&searchtext=" + postal_code.replace(/ /g, "+"), 
-        function(data) {
-            var location_ = data["Response"]["View"][0]["Result"][0]["Location"]["DisplayPosition"];
-            latlng_array.push(location_.Latitude);
-            latlng_array.push(location_.Longitude);
+        function(status, data) {
+            if (status != null) {
+                var location_ = data["Response"]["View"][0]["Result"][0]["Location"]["DisplayPosition"];
+                latlng_array.push(location_.Latitude);
+                latlng_array.push(location_.Longitude);
+            }
         }
     );
 }
@@ -86,7 +88,10 @@ var getJSON = function(url, callback) {
     xhr.open("GET", url, true);
     xhr.responseType = "json";
     xhr.onload = function() {
-        callback(xhr.response);
+        if (xhr.status === 200)
+            callback(null, xhr.response);
+        else
+            callback(xhr.status, xhr.respons);
     };
     xhr.send();
 };
